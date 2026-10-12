@@ -1,0 +1,23 @@
+# Data processing
+pandas>=2.2
+numpy>=1.26
+
+# Visualization
+matplotlib>=3.8
+
+# API enrichment (TMDB, Google Search)
+requests>=2.32
+python-dotenv>=1.0
+
+# PostgreSQL loading
+sqlalchemy>=2.0
+psycopg2-binary>=2.9
+
+# Hit-vs-flop classifier
+scikit-learn>=1.5
+
+# Data quality tests
+pytest>=7.4
+
+# Notebooks
+jupyter>=1.0

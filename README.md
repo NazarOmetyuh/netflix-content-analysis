@@ -30,9 +30,19 @@ Netflix CSV + APIs  →  Python (pandas)  →  PostgreSQL (star schema)  →  ML
 data/       raw, processed, API cache
 python/     cleaning, API fetch, DB load, model training
 sql/        schema and queries
+notebooks/  exploration notebooks (01_exploration.ipynb: first look at the data)
 tests/      data quality checks
 docs/       diagrams and model report
+requirements.txt
 ```
+
+## Setup
+```
+pip install -r requirements.txt
+jupyter notebook notebooks/01_exploration.ipynb
+```
+
+See [CHANGELOG.md](CHANGELOG.md) for version history.
 
 ## Data Quality
 - Missing values filled from the APIs are tracked with a source column (netflix_csv / tmdb / google_search / unknown)
