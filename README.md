@@ -49,4 +49,4 @@ docs/       diagrams and model report
 - Box office data exists only for theatrical movies, so TV shows and most Netflix Originals are excluded from revenue analysis
 
 ## Author
-Your Name · [LinkedIn](https://www.linkedin.com/in/nazarii-ometiukh-81a7b2377/)
+Nazarii Ometiukh · [LinkedIn](https://www.linkedin.com/in/nazarii-ometiukh-81a7b2377/)
