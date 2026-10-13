@@ -7,6 +7,7 @@ Data analytics project: Python ETL, PostgreSQL star schema, API enrichment, and 
 - Which countries, genres, actors, and directors perform best?
 - Is there a correlation between box office and IMDb rating?
 - Can we predict whether a movie will be a hit or a flop?
+- What is the budget elasticity of revenue? Do bigger budgets have diminishing returns?
 
 ## Tech Stack
 - Python: pandas, requests, scikit-learn, pytest
@@ -30,19 +31,9 @@ Netflix CSV + APIs  →  Python (pandas)  →  PostgreSQL (star schema)  →  ML
 data/       raw, processed, API cache
 python/     cleaning, API fetch, DB load, model training
 sql/        schema and queries
-notebooks/  exploration notebooks (01_exploration.ipynb: first look at the data)
 tests/      data quality checks
 docs/       diagrams and model report
-requirements.txt
 ```
-
-## Setup
-```
-pip install -r requirements.txt
-jupyter notebook notebooks/01_exploration.ipynb
-```
-
-See [CHANGELOG.md](CHANGELOG.md) for version history.
 
 ## Data Quality
 - Missing values filled from the APIs are tracked with a source column (netflix_csv / tmdb / google_search / unknown)
