@@ -2,6 +2,27 @@
 
 Versions start at 0. Big changes bump the minor version (0.1 → 0.2); small fixes bump the patch (0.1.0 → 0.1.1).
 
+## [0.3.0] - 2026-10-14
+Enrichment step: gaps in the processed `movies` and `tv_shows` tables are filled from the TMDB API.
+
+### Added
+- `python/fetch_tmdb.ipynb`, in 9 steps:
+  1. Settings: API key from `.env`, `SAMPLE` for test runs, `ONLY_ROWS_WITH_GAPS`, number of parallel requests.
+  2. Load `movies.csv` and `tv_shows.csv` and show the missing values (director, cast, country, rating).
+  3. Request helper with retries for rate limits (`429`) and server errors; works with a v3 API key or a v4 token.
+  4. Match each title to a TMDB ID with `/search`: same title (ignoring case and punctuation) and the closest year. Movies are searched with the year first; TV shows without it, because Netflix's `release_year` is often the latest season.
+  5. One details request per title (credits, external IDs, US age ratings), converted to our columns.
+  6. Cache in `data/api/tmdb_cache.json`, so titles already looked up are skipped on later runs.
+  7. Fill only empty cells (`director`, `cast`, `country`, `rating`, ...); existing Netflix values are never overwritten. For TV shows, the show creators fill `director`.
+  8. Show how many cells were filled and what is still missing.
+  9. Save the CSVs and replace the `movies` and `tv_shows` tables in PostgreSQL.
+- New columns: `tmdb_id`, `imdb_id`, `genres`, `tmdb_rating`, `tmdb_votes`, plus `budget` and `revenue` for movies.
+
+### Notes
+- `/find` and `/discover` are not used: Netflix rows have no external IDs, and `/discover` would add titles that are not on Netflix.
+- A full run takes about 7 minutes (32 parallel requests, close to TMDB's rate limit of about 50 per second).
+- `date_added` cannot be filled from TMDB.
+
 ## [0.2.0] - 2026-10-13
 Cleaning step: the raw data is cleaned, saved as CSV files and loaded into PostgreSQL.
 
