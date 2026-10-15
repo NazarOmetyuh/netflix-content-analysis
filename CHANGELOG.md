@@ -2,6 +2,24 @@
 
 Versions start at 0. Big changes bump the minor version (0.1 → 0.2); small fixes bump the patch (0.1.0 → 0.1.1).
 
+## [0.4.0] - 2026-10-15
+Power BI dashboard built on the enriched movies table in PostgreSQL.
+
+### Added
+- `powerbi/Dashboard_final.pbix` with 4 pages. Genre, country and release year slicers are synced across pages:
+  1. Overview: counts of movies, countries, genres, directors and actors, average rating and revenue coverage; movies by release year, genre, country (top 10) and age rating. Every movie is counted, even when revenue or other values are missing.
+  2. Actors: top 10 by revenue, average rating, number of movies and TMDB votes; a ranking table with all metrics; the best actor per release year.
+  3. Directors: the same layout as Actors.
+  4. Revenue: budget vs revenue scatter, median revenue multiple and hit rate by budget band, hit vs flop share, revenue by year and genre, and the top movies by revenue.
+- Model tables split from list columns: `movie_cast`, `movie_directors`, `movie_genres`, `movie_countries` (missing genres and countries become `Unknown`), plus a `Min Movies` slicer table.
+- Processed CSVs (`data/processed/`) and the TMDB-enriched data and caches (`data/api/`).
+- `sql/02.sql` as a placeholder for the load step.
+
+### Notes
+- Box office analysis only uses movies with budget and revenue of at least $100K, because TMDB has junk values such as a $5 budget. Hit = revenue of at least 2x budget.
+- Average rating only uses movies with at least 10 TMDB votes.
+- Rating rankings for actors and directors need at least the number of movies picked in `Min Movies` (3 by default).
+
 ## [0.3.0] - 2026-10-14
 Enrichment step: gaps in the processed `movies` and `tv_shows` tables are filled from the TMDB API.
 
