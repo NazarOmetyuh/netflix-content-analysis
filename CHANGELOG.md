@@ -2,6 +2,26 @@
 
 Versions start at 0. Big changes bump the minor version (0.1 → 0.2); small fixes bump the patch (0.1.0 → 0.1.1).
 
+## [0.5.0] - 2026-10-16
+SQL analysis: the first three queries that answer the README questions, with the insights written down in a findings file.
+
+### Added
+- `sql/02_movies_vs_tv_by_country.sql`: movies vs TV shows per country, for countries with more than 100 titles.
+- `sql/03_india_vs_south_korea_trend.sql`: how the movie / TV mix of India and South Korea changed, by year added to Netflix (running totals with window functions) and by release period.
+- `sql/04_actor_career_paths.sql`: whether actors with more than 10 titles stay in the type they started in (movies or TV shows). Uses a temporary view, `DENSE_RANK()` for each actor's first year, and a summary by start type.
+- `sql/docs/findings.md`: one section per query, with result tables and insights:
+  1. India is the most movie-heavy large catalogue (about 11 movies per TV show); South Korea is the most TV-heavy (0.36).
+  2. India has been focused on movies for a long time; South Korea's TV-show boom on Netflix started after 2009.
+  3. Actors who start in movies seem to stay in movies more often (86.4% vs 54.5%), but with movies and TV shows weighted equally both groups stay about 73% of the time. The gap comes from the catalogue having more than twice as many movies.
+
+### Removed
+- `sql/02.sql` placeholder; its number is now used by the first analysis query.
+
+### Notes
+- The findings assume the data is correct and large enough to draw conclusions.
+- A title made by several countries counts once for each of them.
+- Netflix's `release_year` for TV shows is often the latest season, which can shift an actor's start type.
+
 ## [0.4.0] - 2026-10-15
 Power BI dashboard built on the enriched movies table in PostgreSQL.
 
