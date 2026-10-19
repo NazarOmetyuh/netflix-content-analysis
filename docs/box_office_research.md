@@ -94,7 +94,7 @@ Each movie gets a score: the average log revenue of its lead actors' (or its dir
 To see what comes with hits, every factor is also correlated with `is_hit` (1 = hit, 0 = flop) instead of revenue. It's the same `CORR()`, `REGR_R2()` and `REGR_SLOPE()`. Pearson's r on a yes/no value is also called the point-biserial correlation.
 
 - **r and r²** read the same way: r² is the share of the hit / flop differences the factor explains on its own.
-- **The slope becomes a change in hit chance.** `REGR_SLOPE(is_hit, x) × 100` is the change in the chance of being a hit, in **percentage points (pp)**, per unit of x. For example, +13.7 pp per rating point means the hit chance goes from about 50% to about 64% when the rating goes up by 1.
+- **The slope becomes a change in hit chance.** `REGR_SLOPE(is_hit, x) × 100` is the change in the chance of being a hit, in **percentage points (pp)**, per unit of x. For example, +13.6 pp per rating point means the hit chance goes from about 50% to about 64% when the rating goes up by 1.
 - **For logged factors (budget, votes, track records) the unit is a doubling:** slope × LN(2).
 - **r² for hits is always much smaller than for revenue.** A yes/no outcome carries less information than a dollar amount, and whether a movie pays back 2x depends on many things no single factor captures. So compare hit r² values with each other, not with revenue r² values.
 
@@ -106,27 +106,27 @@ To see what comes with hits, every factor is also correlated with `is_hit` (1 = 
 # Part 2: Research
 
 ## 1. Is there a correlation between box office and rating?
-**Query:** `05_box_office_vs_rating.sql` · **Movies:** 1,219
+**Query:** [`05_box_office_vs_rating.sql`](../sql/05_box_office_vs_rating.sql) · **Movies:** 1,219
 
 | Measure | r | t |
 |---|---:|---:|
 | Rating vs revenue (Pearson) | 0.170 | 6.0 |
-| Rating vs log revenue (Pearson) | 0.195 | 6.9 |
-| Rating vs revenue (Spearman, ranks) | 0.145 | 5.1 |
+| Rating vs log revenue (Pearson) | 0.194 | 6.9 |
+| Rating vs revenue (Spearman, ranks) | 0.144 | 5.1 |
 | Rating vs log revenue multiple (revenue / budget) | 0.301 | 11.0 |
 | Log votes vs log revenue (for comparison) | 0.625 | 27.9 |
 
 | Effect of +1 rating point | r² | Change |
 |---|---:|---:|
-| Revenue | 3.8% | **+54.7%** |
-| Revenue / budget | 9.0% | **+67.4%** |
+| Revenue | 3.8% | **+54.5%** |
+| Revenue / budget | 9.0% | **+67.3%** |
 
 | Rating band | Movies | Median revenue | Median multiple | Hit rate |
 |---|---:|---:|---:|---:|
 | under 5.5 | 106 | $14.7M | 1.53x | 38.7% |
 | 5.5-5.9 | 187 | $41.0M | 1.86x | 48.1% |
-| 6.0-6.4 | 255 | $33.8M | 1.98x | 49.8% |
-| 6.5-6.9 | 300 | $48.2M | 2.38x | 58.0% |
+| 6.0-6.4 | 256 | $34.3M | 1.99x | 50.0% |
+| 6.5-6.9 | 299 | $48.0M | 2.37x | 57.9% |
 | 7.0-7.4 | 226 | $38.1M | 3.03x | 66.8% |
 | 7.5 and above | 145 | $60.3M | 4.75x | 78.6% |
 
@@ -139,22 +139,22 @@ To see what comes with hits, every factor is also correlated with `is_hit` (1 = 
 
 | Factor | r with hit | Explains hit / flop (r²) | t | Hit chance change |
 |---|---:|---:|---:|---:|
-| Rating | 0.224 | 5.0% | 8.0 | **+13.7 pp per rating point** |
+| Rating | 0.224 | 5.0% | 8.0 | **+13.6 pp per rating point** |
 | Votes | 0.234 | 5.5% | 8.4 | +5.1 pp per doubling of votes |
 
 - **For hits, rating is almost as strong as audience size.** For revenue, votes beat rating by 10 to 1 (39% vs 3.8%), but for hits they are nearly equal (5.5% vs 5.0%).
 - **Each rating point adds about 14 percentage points to the chance of being a hit.** That makes rating the factor with the biggest effect on hits in this research.
 
 ## 2. How much do actors influence box office?
-**Query:** `06_actor_influence.sql` · **Movies:** 1,042 (at least one of the first 3 cast members has another box office movie)
+**Query:** [`06_actor_influence.sql`](../sql/06_actor_influence.sql) · **Movies:** 1,042 (at least one of the first 3 cast members has another box office movie)
 
 | Measure | Value |
 |---|---:|
 | r (actor score vs log revenue) | 0.335 |
 | **Share of revenue differences explained (r²)** | **11.2%** |
-| t | 11.5 |
+| t | 11.4 |
 | Elasticity | 0.52 |
-| Explained by budget, same movies | 46.3% |
+| Explained by budget, same movies | 46.4% |
 | Overlap between actor score and budget (r) | 0.396 |
 
 | Actor score quintile | Median track record of leads | Median revenue | Hit rate |
@@ -162,7 +162,7 @@ To see what comes with hits, every factor is also correlated with `is_hit` (1 = 
 | Q1 (weakest) | $8.1M | $14.0M | 56.9% |
 | Q2 | $22.2M | $34.5M | 52.6% |
 | Q3 | $46.7M | $37.7M | 51.0% |
-| Q4 | $78.5M | $87.3M | 61.1% |
+| Q4 | $78.5M | $85.4M | 61.1% |
 | Q5 (strongest) | $145.0M | $101.3M | 61.5% |
 
 - **Actors explain about 11% of the differences in revenue.** That's three times more than rating but far less than budget.
@@ -173,50 +173,50 @@ To see what comes with hits, every factor is also correlated with `is_hit` (1 = 
 
 | Factor | r with hit | Explains hit / flop (r²) | t | Hit chance change |
 |---|---:|---:|---:|---:|
-| Lead actors' track record | 0.036 | 0.1% | 1.2 | +1.1 pp per doubling of track record |
+| Lead actors' track record | 0.036 | 0.1% | 1.1 | +1.1 pp per doubling of track record |
 
-- **Star actors don't make hits.** The actor score explains 0.1% of the hit / flop differences, and t = 1.2 means even that could be chance. Actors bring revenue (11%), but not profitability.
+- **Star actors don't make hits.** The actor score explains 0.1% of the hit / flop differences, and t = 1.1 means even that could be chance. Actors bring revenue (11%), but not profitability.
 
 ## 3. How much do directors influence box office?
-**Query:** `07_director_influence.sql` · **Movies:** 584 (the director has another box office movie)
+**Query:** [`07_director_influence.sql`](../sql/07_director_influence.sql) · **Movies:** 584 (the director has another box office movie)
 
 | Measure | Value |
 |---|---:|
-| r (director score vs log revenue) | 0.485 |
-| **Share of revenue differences explained (r²)** | **23.5%** |
-| t | 13.4 |
+| r (director score vs log revenue) | 0.487 |
+| **Share of revenue differences explained (r²)** | **23.7%** |
+| t | 13.5 |
 | Elasticity | 0.53 |
-| Explained by budget, same movies | 42.9% |
-| Overlap between director score and budget (r) | 0.432 |
+| Explained by budget, same movies | 43.1% |
+| Overlap between director score and budget (r) | 0.431 |
 
 | Director score quintile | Median track record of director | Median revenue | Hit rate |
 |---|---:|---:|---:|
 | Q1 (weakest) | $5.9M | $13.0M | 52.1% |
 | Q2 | $27.3M | $40.2M | 54.7% |
 | Q3 | $67.9M | $87.8M | 68.4% |
-| Q4 | $132.9M | $122.4M | 59.8% |
-| Q5 (strongest) | $294.5M | $181.3M | 69.0% |
+| Q4 | $132.7M | $118.9M | 59.0% |
+| Q5 (strongest) | $294.5M | $182.9M | 69.8% |
 
 - **Directors explain about 24% of the differences in revenue**, twice as much as actors and six times more than rating.
-- **A director's track record predicts both revenue and hits.** Movies by the strongest directors earn about 14 times more (median $181M vs $13M) and are hits more often (69% vs 52%).
+- **A director's track record predicts both revenue and hits.** Movies by the strongest directors earn about 14 times more (median $183M vs $13M) and are hits more often (70% vs 52%).
 - **This covers only repeat directors.** One-off directors have no track record, so the result shows how much an *established* director's history matters.
 
 **Hit or flop** (fifth query)
 
 | Factor | r with hit | Explains hit / flop (r²) | t | Hit chance change |
 |---|---:|---:|---:|---:|
-| Director's track record | 0.122 | 1.5% | 3.0 | +2.6 pp per doubling of track record |
+| Director's track record | 0.123 | 1.5% | 3.0 | +2.7 pp per doubling of track record |
 
-- **Directors come with hits, but only a little.** The link is real (t = 3.0) but small: doubling a director's track record adds about 2.6 percentage points to the hit chance. Still, directors do better than actors (0.1%, not significant) and budget (negative).
+- **Directors come with hits, but only a little.** The link is real (t = 3.0) but small: doubling a director's track record adds about 2.7 percentage points to the hit chance. Still, directors do better than actors (0.1%, not significant) and budget (negative).
 
 ## 4. Budget elasticity of revenue
-**Query:** `08_budget_elasticity.sql` · **Movies:** 1,231
+**Query:** [`08_budget_elasticity.sql`](../sql/08_budget_elasticity.sql) · **Movies:** 1,231
 
 | Group | Movies | Budget range | Elasticity | r² |
 |---|---:|---|---:|---:|
 | All movies | 1,231 | $0.1M-$300M | 0.84 | 0.44 |
 | Low budget | 411 | $0.1M-$9M | 0.56 | 0.11 |
-| Mid budget | 410 | $9M-$30M | 1.24 | 0.08 |
+| Mid budget | 410 | $9M-$30M | 1.25 | 0.09 |
 | High budget | 410 | $30M-$300M | 1.17 | 0.24 |
 
 | Budget quintile | Budget range | Median revenue | Median multiple | Hit rate |
@@ -224,7 +224,7 @@ To see what comes with hits, every factor is also correlated with `is_hit` (1 = 
 | Q1 (smallest) | $0.1M-$4.5M | $5.8M | 3.57x | 67.6% |
 | Q2 | $4.5M-$12M | $16.7M | 2.18x | 53.7% |
 | Q3 | $12M-$25M | $35.7M | 2.06x | 50.4% |
-| Q4 | $25M-$52M | $79.3M | 2.23x | 56.1% |
+| Q4 | $25M-$52M | $80.1M | 2.23x | 56.1% |
 | Q5 (biggest) | $53M-$300M | $196.5M | 2.20x | 57.7% |
 
 - **Overall elasticity is 0.84:** 10% more budget comes with about 8.4% more revenue. Budget alone explains 44% of the differences in revenue.
@@ -235,12 +235,12 @@ To see what comes with hits, every factor is also correlated with `is_hit` (1 = 
 
 | Factor | r with hit | Explains hit / flop (r²) | t | Hit chance change |
 |---|---:|---:|---:|---:|
-| Budget | -0.069 | 0.5% | -2.4 | **-1.6 pp per doubling of budget** |
+| Budget | -0.068 | 0.5% | -2.4 | **-1.6 pp per doubling of budget** |
 
 - **A bigger budget slightly lowers the chance of a hit.** Doubling the budget comes with 1.6 percentage points *less* hit chance. The link is weak, but it points the wrong way: budget explains 44% of revenue and nothing of profitability.
 
 ## 5. What influences revenue, and what comes with a hit?
-**Query:** `09_revenue_drivers_and_hits.sql` · **Movies:** 1,219 · **Overall hit rate:** 57.2%
+**Query:** [`09_revenue_drivers_and_hits.sql`](../sql/09_revenue_drivers_and_hits.sql) · **Movies:** 1,219 · **Overall hit rate:** 57.2%
 
 | Outcome | Movies | Avg rating | Median votes | Median budget | Median revenue | Avg runtime | Avg release year |
 |---|---:|---:|---:|---:|---:|---:|---:|
@@ -250,9 +250,9 @@ To see what comes with hits, every factor is also correlated with `is_hit` (1 = 
 | Statistic | r with log revenue | Explains revenue | Revenue rank | r with hit | Explains hit / flop | t (hit) | Hit rank |
 |---|---:|---:|---:|---:|---:|---:|---:|
 | Votes (log) | 0.625 | 39.0% | 2 | 0.234 | 5.5% | 8.4 | 1 |
-| Rating | 0.195 | 3.8% | 4 | 0.224 | 5.0% | 8.0 | 2 |
+| Rating | 0.194 | 3.8% | 4 | 0.224 | 5.0% | 8.0 | 2 |
 | Release year | -0.208 | 4.3% | 3 | -0.185 | 3.4% | -6.6 | 3 |
-| Budget (log) | 0.659 | 43.4% | 1 | -0.071 | 0.5% | -2.5 | 4 |
+| Budget (log) | 0.659 | 43.4% | 1 | -0.070 | 0.5% | -2.5 | 4 |
 | Runtime | 0.024 | 0.1% | 5 | 0.041 | 0.2% | 1.4 | 5 |
 
 Groups with the highest and lowest hit rates (groups with at least 30 movies):
@@ -287,10 +287,10 @@ Groups with the highest and lowest hit rates (groups with at least 30 movies):
 |---|---:|---:|---:|---:|---|---|---|
 | Budget | **43%** | 1 | 0.5% (negative) | 5 | +10% budget → +8.4% revenue | **-1.6 pp** per doubling | 08 |
 | Votes (audience size) | **39%** | 2 | **5.5%** | 1 | – | +5.1 pp per doubling | 05, 09 |
-| Director's track record | **24%** | 3 | 1.5% | 4 | +10% track record → +5.3% revenue | +2.6 pp per doubling | 07 |
+| Director's track record | **24%** | 3 | 1.5% | 4 | +10% track record → +5.3% revenue | +2.7 pp per doubling | 07 |
 | Lead actors' track record | 11% | 4 | 0.1% (not significant) | 7 | +10% track record → +5.2% revenue | +1.1 pp per doubling | 06 |
 | Release year | 4% | 5 | 3.4% (negative) | 3 | – | older movies are more often hits | 09 |
-| Rating | 4% | 6 | **5.0%** | 2 | +1 point → +55% revenue | **+13.7 pp** per point | 05 |
+| Rating | 4% | 6 | **5.0%** | 2 | +1 point → +55% revenue | **+13.6 pp** per point | 05 |
 | Runtime | 0% | 7 | 0.2% (not significant) | 6 | – | – | 09 |
 
 **How to read this table:**
@@ -311,5 +311,5 @@ Groups with the highest and lowest hit rates (groups with at least 30 movies):
 1. **Revenue and hits have different drivers.** Budget, audience size and big names decide *how much* a movie earns. Audience size and quality decide *whether it pays back 2x*.
 2. **Money buys revenue, not profit.** Budget explains 43% of revenue but nothing of hits, and doubling the budget comes with slightly *fewer* hits (-1.6 pp). There are no diminishing returns on revenue above about $9M, but the multiple stays flat at about 2.2x.
 3. **Quality is the strongest lever for a hit.** Rating explains only 4% of revenue, but it is the #2 factor for hits: each extra point adds about 55% revenue and about 14 percentage points of hit chance. 7.5+ movies are hits 79% of the time against 39% under 5.5.
-4. **Directors matter more than actors, on both measures.** A director's track record explains 24% of revenue and has a small but real link to hits (+2.6 pp per doubling). Star actors explain 11% of revenue and nothing of hits: they bring box office, and a budget that eats it.
+4. **Directors matter more than actors, on both measures.** A director's track record explains 24% of revenue and has a small but real link to hits (+2.7 pp per doubling). Star actors explain 11% of revenue and nothing of hits: they bring box office, and a budget that eats it.
 5. **Hits are hard to predict from any single factor.** Even the best one, audience size, explains only 5.5% of hit / flop differences. A hit needs several things together: a modest budget, a strong rating, a wide audience and an established director. Horror is the most reliable genre.

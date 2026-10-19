@@ -3,49 +3,52 @@
 Insights from the SQL analysis queries. Each finding names the query it comes from.
 
 ## 1. Movies vs TV shows by country
-**Query:** `02_movies_vs_tv_by_country.sql`
-**Scope:** countries with more than 100 titles (movies + TV shows) and at least one of each type. A title made by several countries counts once for each of them.
+**Query:** [`02_movies_vs_tv_by_country.sql`](../sql/02_movies_vs_tv_by_country.sql)
+**Scope:** countries with more than 100 titles (movies + TV shows) and at least one of each type. A title made by several countries counts once for each of them. Countries include the ones TMDB filled in where Netflix had none.
 
 | Country | Titles | Movies | TV shows | Movies per TV show |
 |---|---:|---:|---:|---:|
-| Hong Kong | 105 | 100 | 5 | 20.00 |
-| India | 1,046 | 962 | 84 | 11.45 |
-| Nigeria | 103 | 94 | 9 | 10.44 |
-| Egypt | 117 | 102 | 15 | 6.80 |
-| Germany | 226 | 182 | 44 | 4.14 |
-| France | 393 | 303 | 90 | 3.37 |
-| United States | 3,690 | 2,752 | 938 | 2.93 |
-| Spain | 232 | 171 | 61 | 2.80 |
-| Turkey | 113 | 83 | 30 | 2.77 |
-| Canada | 445 | 319 | 126 | 2.53 |
-| China | 162 | 114 | 48 | 2.38 |
-| United Kingdom | 806 | 534 | 272 | 1.96 |
-| Mexico | 169 | 111 | 58 | 1.91 |
-| Australia | 160 | 94 | 66 | 1.42 |
-| Japan | 318 | 119 | 199 | 0.60 |
-| South Korea | 231 | 61 | 170 | 0.36 |
+| Hong Kong | 111 | 104 | 7 | 14.86 |
+| India | 1,098 | 1,002 | 96 | 10.44 |
+| Nigeria | 125 | 113 | 12 | 9.42 |
+| Egypt | 134 | 118 | 16 | 7.38 |
+| Germany | 237 | 192 | 45 | 4.27 |
+| France | 413 | 318 | 95 | 3.35 |
+| Turkey | 116 | 86 | 30 | 2.87 |
+| Italy | 104 | 77 | 27 | 2.85 |
+| United States | 3,870 | 2,853 | 1,017 | 2.81 |
+| Canada | 464 | 331 | 133 | 2.49 |
+| Spain | 249 | 176 | 73 | 2.41 |
+| Brazil | 109 | 74 | 35 | 2.11 |
+| China | 173 | 116 | 57 | 2.04 |
+| United Kingdom | 838 | 551 | 287 | 1.92 |
+| Mexico | 183 | 117 | 66 | 1.77 |
+| Australia | 165 | 95 | 70 | 1.36 |
+| Japan | 353 | 136 | 217 | 0.63 |
+| South Korea | 267 | 67 | 200 | 0.34 |
+| Taiwan | 104 | 22 | 82 | 0.27 |
 
-- **India is the most movie-heavy of the large catalogues:** about 11 movies per TV show across 1,046 titles. Only Hong Kong has a higher ratio (20 to 1), but it barely passes the 100-title cut and has just 5 TV shows, so its ratio is fragile.
-- **South Korea has the lowest ratio:** about 1 movie for every 3 TV shows (0.36). Japan is the only other country with more TV shows than movies (0.60). Both fit the strength of K-dramas and anime.
-- **The United States sits near the middle** (2.93) but has the largest catalogue by far, with 3,690 titles.
+- **India is the most movie-heavy of the large catalogues:** about 10 movies per TV show across 1,098 titles. Only Hong Kong has a higher ratio (15 to 1), but it barely passes the 100-title cut and has just 7 TV shows, so its ratio is fragile.
+- **South Korea is among the most TV-heavy:** about 1 movie for every 3 TV shows (0.34). Only Taiwan is lower (0.27, with 104 titles). Japan is the only other country with more TV shows than movies (0.63). This fits the strength of K-dramas, Taiwanese dramas and anime.
+- **The United States sits near the middle** (2.81) but has the largest catalogue by far, with 3,870 titles.
 
 ## 2. India vs South Korea: movies vs TV shows over time
-**Query:** `03_india_vs_south_korea_trend.sql` (second query: by release period)
+**Query:** [`03_india_vs_south_korea_trend.sql`](../sql/03_india_vs_south_korea_trend.sql) (second query: by release period)
 **Scope:** India and South Korea only, grouped by the year titles were released. Assumes the data is correct and large enough to draw conclusions.
 
 | Released | India movies | India TV shows | India % movies | South Korea movies | South Korea TV shows | South Korea % movies |
 |---|---:|---:|---:|---:|---:|---:|
-| before 2000 | 86 | 0 | 100.0 | 0 | 0 | – |
-| 2000-2009 | 163 | 1 | 99.4 | 3 | 3 | 50.0 |
-| 2010-2014 | 214 | 15 | 93.4 | 3 | 25 | 10.7 |
-| 2015-2017 | 247 | 14 | 94.6 | 23 | 62 | 27.1 |
-| 2018-2021 | 252 | 54 | 82.4 | 32 | 80 | 28.6 |
+| before 2000 | 87 | 0 | 100.0 | 0 | 0 | – |
+| 2000-2009 | 165 | 1 | 99.4 | 3 | 3 | 50.0 |
+| 2010-2014 | 227 | 18 | 92.7 | 3 | 25 | 10.7 |
+| 2015-2017 | 251 | 17 | 93.7 | 23 | 69 | 25.0 |
+| 2018-2021 | 272 | 60 | 81.9 | 38 | 103 | 27.0 |
 
-- **India has been focused on movies for a long time.** Before 2010 almost every Indian title on Netflix was a movie (249 movies vs 1 TV show), and movies still make up over 80% today.
-- **South Korea's TV-show boom started after 2009.** Before 2010 it had only 6 titles on Netflix. From 2010 on, TV shows clearly lead, with 167 shows against 58 movies.
+- **India has been focused on movies for a long time.** Before 2010 almost every Indian title on Netflix was a movie (252 movies vs 1 TV show), and movies still make up over 80% today.
+- **South Korea's TV-show boom started after 2009.** Before 2010 it had only 6 titles on Netflix. From 2010 on, TV shows clearly lead, with 197 shows against 64 movies.
 
 ## 3. Do actors stay in movies or TV shows?
-**Query:** `04_actor_career_paths.sql` (third query: summary by start type)
+**Query:** [`04_actor_career_paths.sql`](../sql/04_actor_career_paths.sql) (third query: summary by start type)
 **Scope:** 342 actors with more than 10 titles on Netflix. The start type is the type of their titles in their earliest release year. The path is based on all their later titles. Assumes the data is correct and large enough to draw conclusions.
 
 | Started in | Actors | Stayed only | Mostly stayed | Switched | Later titles of the same type |

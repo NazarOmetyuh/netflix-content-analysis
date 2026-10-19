@@ -2,6 +2,36 @@
 
 Versions start at 0. Big changes bump the minor version (0.1 → 0.2); small fixes bump the patch (0.1.0 → 0.1.1).
 
+## [0.7.0] - 2026-10-19
+Data quality tests, fixes for the issues they found, one consistent set of tables, and a rewritten README.
+
+### Added
+- `tests/` with 32 pytest checks (`pytest.ini` points pytest to it):
+  - `test_cleaning.py`: no titles lost, unique IDs, movies and TV shows split correctly, duration and rating fixed, `date_added` trimmed and parseable, countries clean.
+  - `test_tmdb_enrichment.py`: same titles before and after enrichment, Netflix values never overwritten, valid TMDB values, each TMDB id matched to one title (except hand-checked duplicate listings), and the countries table matching the enriched country columns.
+  - `test_database.py`: PostgreSQL tables match the CSV files, including box office totals. Skipped without a database connection.
+- `data/api/countries.csv`: countries table built from the enriched data.
+
+### Fixed
+- `python/clean.ipynb` trims `date_added` (88 TV shows had a leading space).
+- `python/fetch_tmdb.ipynb` has a `MANUAL_TMDB_IDS` list for 8 titles that were matched to the wrong TMDB entry, for example TMNT (2007) matched to the 1990 film, which gave it the wrong budget and revenue.
+- The `countries` table was built before TMDB filled in about 550 missing countries, so SQL 02-03 and the dashboard counted different countries. `fetch_tmdb.ipynb` now rebuilds it from the enriched data.
+- The markdown of step 9 in `fetch_tmdb.ipynb` said the enriched files replace `data/processed/`; they are saved to `data/api/`.
+
+### Changed
+- Moved `sql/docs/` to `docs/`. Query names in the docs link to the SQL files.
+- README rewritten to match the project: questions and where they are answered, key findings, the experiment (results in about March 2027), dashboard section with space for screenshots, tech stack, structure, data quality, how to run, next steps.
+- Research numbers updated after the data fixes. Most moved by 0.1 or less. Finding 1 changed more: with the TMDB-filled countries, Taiwan (0.27 movies per TV show) has the lowest ratio, just below South Korea (0.34), and Italy and Brazil pass the 100-title cut.
+- `.vscode/` is no longer tracked (local database connection settings).
+
+### Removed
+- `sql/01_schema.sql`: the star schema was never loaded, and the dashboard builds its own model.
+- Google Search API enrichment and the source tracking column from the README plan.
+- Unused database tables: `public.titles` and the `analytics` schema.
+
+### Notes
+- The Power BI dashboard reads the `movies` table and needs a Refresh to pick up the fixed data.
+
 ## [0.6.0] - 2026-10-19
 Box office research: what drives revenue and what makes a hit, plus an experiment that predicts 5 upcoming movies.
 
