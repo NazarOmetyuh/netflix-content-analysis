@@ -2,6 +2,33 @@
 
 Versions start at 0. Big changes bump the minor version (0.1 → 0.2); small fixes bump the patch (0.1.0 → 0.1.1).
 
+## [0.6.0] - 2026-10-19
+Box office research: what drives revenue and what makes a hit, plus an experiment that predicts 5 upcoming movies.
+
+### Added
+- `sql/05_box_office_vs_rating.sql`: rating vs revenue with Pearson, log and Spearman correlation, t-statistic, rating bands, revenue change per rating point (`REGR_SLOPE`), and rating vs hit or flop.
+- `sql/06_actor_influence.sql`: how much lead actors explain revenue and hits, using a leave-one-out track record (average revenue of the leads' other movies, with window functions).
+- `sql/07_director_influence.sql`: the same method for directors.
+- `sql/08_budget_elasticity.sql`: budget elasticity of revenue (log-log `REGR_SLOPE`), elasticity by budget tier, return and hit rate by budget quintile, and budget vs hit or flop.
+- `sql/09_revenue_drivers_and_hits.sql`: hits vs flops, correlation of each statistic with revenue and with hits side by side, and hit rate and lift by genre, age rating, rating band, votes, budget, runtime, decade and country.
+- `sql/10_experiment_upcoming_films.sql`: predicts whether 5 movies releasing Oct-Dec 2026 (Avengers: Doomsday, Violent Night 2, Wife & Dog, I Play Rocky, The Angry Birds Movie 3) will be hits. It gives a pre-release prediction (director, lead actors, genres, budget), after-release scenarios for 6 ratings x 6 vote counts (two-variable regression on rating and votes), and a query to check the results.
+- `sql/docs/box_office_research.md`: explains the measures (Pearson r, r², t, logs, Spearman, slope, elasticity, track record, hit rate, lift), the results of queries 05-09, and a comparison of what drives revenue vs what drives hits.
+- `sql/docs/experiment_upcoming_films.md`: the experiment's inputs, predictions, scenario tables and a results table to fill in around March 2027.
+
+### Changed
+- `sql/docs/findings.md` keeps findings 1-3 and links to the box office research.
+
+### Key results
+- Revenue: budget explains 43%, votes 39%, the director's track record 24%, lead actors 11% and rating 4%.
+- Hits: votes (5.5%) and rating (5.0%) matter most. Budget slightly lowers the hit chance, and actors show no real link.
+- +1 rating point comes with about +55% revenue and +14 percentage points of hit chance.
+- Budget elasticity is 0.84 overall, but above about $9M there are no diminishing returns.
+- All 5 upcoming movies are predicted as hits before release, with 54-63% chance.
+
+### Notes
+- Box office data exists for about 20% of Netflix movies (mostly theatrical releases), so the research describes those movies only.
+- Four of the five experiment budgets are estimates from comparable films.
+
 ## [0.5.0] - 2026-10-16
 SQL analysis: the first three queries that answer the README questions, with the insights written down in a findings file.
 

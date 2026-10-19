@@ -72,3 +72,7 @@ To check this, the later titles were reweighted as if the catalogue had equal nu
 - **With an equal number of movies and TV shows, the gap disappears.** Both groups would stay in their starting type about 73% of the time.
 - **So the gap is most likely caused by the data, not by actors.** Starting in movies doesn't make an actor more loyal to movies. The catalogue simply has more than twice as many movies as TV shows.
 - **Actors do tend to stay in the type they start in** (about 3 out of 4 later roles), and this is the same for movies and TV shows.
+
+---
+
+The box office research (queries 05-09: rating, actors, directors, budget and hits) has its own file: [box_office_research.md](box_office_research.md).
