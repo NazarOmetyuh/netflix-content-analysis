@@ -40,16 +40,24 @@ Each movie also has after-release scenarios: the hit chance and expected revenue
 A 4-page Power BI report ([`powerbi/Dashboard_final.pbix`](powerbi/Dashboard_final.pbix)) with genre, country and release year slicers synced across pages.
 
 ### 1. Overview
-<!-- Screenshot: Overview page (e.g. docs/images/dashboard_overview.png) -->
+Movies by release year, genre, top 10 countries and age rating, with headline counts.
+
+![Overview page](docs/images/dashboard_overview.png)
 
 ### 2. Actors
-<!-- Screenshot: Actors page (e.g. docs/images/dashboard_actors.png) -->
+Top 10 actors by revenue, average rating, number of movies and TMDB votes. Pick an actor to see their movies.
+
+![Actors page](docs/images/dashboard_actors.png)
 
 ### 3. Directors
-<!-- Screenshot: Directors page (e.g. docs/images/dashboard_directors.png) -->
+The same layout for directors.
+
+![Directors page](docs/images/dashboard_directors.png)
 
 ### 4. Revenue
-<!-- Screenshot: Revenue page (e.g. docs/images/dashboard_revenue.png) -->
+Budget vs revenue for every box office movie (hits vs flops), median multiple and hit rate by budget band, and revenue by year and genre.
+
+![Revenue page](docs/images/dashboard_revenue.png)
 
 ## Tech Stack
 - **Python:** pandas, requests, python-dotenv, SQLAlchemy, pytest
@@ -78,7 +86,7 @@ data/
 notebooks/      data exploration
 python/         cleaning and TMDB enrichment notebooks
 sql/            analysis queries, 02-10
-docs/           findings, box office research, experiment
+docs/           findings, box office research, experiment, dashboard screenshots
 powerbi/        Power BI dashboard
 tests/          pytest data quality checks
 ```

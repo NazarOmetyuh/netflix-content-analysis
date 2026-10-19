@@ -2,6 +2,18 @@
 
 Versions start at 0. Big changes bump the minor version (0.1 → 0.2); small fixes bump the patch (0.1.0 → 0.1.1).
 
+## [0.7.1] - 2026-10-19
+Dashboard refreshed with the fixed data, and screenshots added to the README.
+
+### Added
+- `docs/images/`: screenshots of the 4 dashboard pages (Overview, Actors, Directors, Revenue), shown in the README's Dashboard section with a short description of each page.
+
+### Changed
+- `powerbi/Dashboard_final.pbix` refreshed from PostgreSQL, so it uses the data fixed in 0.7.0 (corrected TMDB matches, trimmed `date_added`).
+
+### Notes
+- The screenshots have the release year slicer set to 1942-2019, so their counts (5,337 movies, 1,204 with box office) are lower than in the research, which uses all years.
+
 ## [0.7.0] - 2026-10-19
 Data quality tests, fixes for the issues they found, one consistent set of tables, and a rewritten README.
 
